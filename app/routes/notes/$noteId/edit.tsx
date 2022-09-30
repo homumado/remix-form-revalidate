@@ -127,5 +127,5 @@ export async function action({ request, params }: ActionArgs) {
     id: params.noteId,
   });
 
-  return json({ errors: null, note }, { status: 200 });
+  return { errors: null };
 }
