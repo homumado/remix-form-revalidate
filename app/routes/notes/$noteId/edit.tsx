@@ -3,7 +3,7 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import { deleteNote, createNote, getNote } from "~/models/note.server";
+import { updateNote, getNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 import { useRef, useEffect } from "react";
 
@@ -97,8 +97,10 @@ export default function EditNotePage() {
   );
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request, params }: ActionArgs) {
   const userId = await requireUserId(request);
+
+  invariant(params.noteId, "noteId not found");
 
   const formData = await request.formData();
   const title = formData.get("title");
@@ -118,7 +120,12 @@ export async function action({ request }: ActionArgs) {
     );
   }
 
-  const note = await createNote({ title, body, userId });
+  const note = await updateNote({
+    title: "[Edit]: " + title,
+    body,
+    userId,
+    id: params.noteId,
+  });
 
-  return redirect(`/notes/${note.id}`);
+  return json({ errors: null, note }, { status: 200 });
 }
