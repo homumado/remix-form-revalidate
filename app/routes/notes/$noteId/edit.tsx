@@ -3,7 +3,7 @@ import { json } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import { updateNote, getNote } from "~/models/note.server";
+import { getNote, updateNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 
 export async function loader({ request, params }: LoaderArgs) {
@@ -54,7 +54,6 @@ export default function EditNotePage() {
           />
         </label>
       </div>
-
       <div className="text-right">
         <button
           type="submit"
