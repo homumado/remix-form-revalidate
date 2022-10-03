@@ -92,8 +92,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly apps create remix-form-revalidate-424b
-  fly apps create remix-form-revalidate-424b-staging
+  fly apps create remix-form-revalidate
+  fly apps create remix-form-revalidate-staging
   ```
 
   > **Note:** Make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
@@ -115,8 +115,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app remix-form-revalidate-424b
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app remix-form-revalidate-424b-staging
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app remix-form-revalidate
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app remix-form-revalidate-staging
   ```
 
   If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
@@ -124,8 +124,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
 
   ```sh
-  fly volumes create data --size 1 --app remix-form-revalidate-424b
-  fly volumes create data --size 1 --app remix-form-revalidate-424b-staging
+  fly volumes create data --size 1 --app remix-form-revalidate
+  fly volumes create data --size 1 --app remix-form-revalidate-staging
   ```
 
 Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
